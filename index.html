@@ -2,16 +2,27 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8"/>
-  <title>PAINEL MUDIN VP</title>
+  <title>RLK SCANNER</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-  <form id="loginForm">
-    <h1>PAINEL MUDIN VP</h1>
-    <input id="user" type="text" placeholder="Usuário" required>
-    <input id="pass" type="password" placeholder="Senha" required>
-    <button type="submit">INICIAR</button>
+<body class="dash">
+  <h1>RLK SCANNER v3</h1>
+  <form id="scanForm">
+    <input id="link" type="text" placeholder="Cole o link do site" required>
+    <button type="submit">🔍 SCAN</button>
   </form>
-  <script src="login.js"></script>
+  <div id="loader" class="hidden"></div>
+  <pre id="dump"></pre>
+  <script>
+    document.getElementById('scanForm').addEventListener('submit', async e=>{
+      e.preventDefault();
+      const l=document.getElementById('link').value;
+      document.getElementById('loader').classList.remove('hidden');
+      const r=await fetch('scan.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:l})});
+      const d=await r.json();
+      document.getElementById('loader').classList.add('hidden');
+      document.getElementById('dump').textContent=JSON.stringify(d,null,2);
+    });
+  </script>
 </body>
 </html>
