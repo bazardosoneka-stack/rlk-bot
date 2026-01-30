@@ -1,13 +1,10 @@
-document.getElementById('loginForm').addEventListener('submit', function (e) {
+document.getElementById('loginForm').addEventListener('submit', e => {
   e.preventDefault();
   const u = document.getElementById('user').value;
   const p = document.getElementById('pass').value;
-  if (u === 'admin' && p === 'admin123') {
-    location.href = 'dashboard.html';
-  } else {
-    const err = document.getElementById('error');
-    err.textContent = 'Acesso negado';
-    err.classList.add('shake');
-    setTimeout(() => err.classList.remove('shake'), 400);
+  if(u==='admin' && p==='admin123'){
+     location.href='dashboard.html';
+  }else{
+     alert('Usuário ou senha inválidos');
   }
 });
