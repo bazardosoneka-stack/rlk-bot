@@ -1,12 +1,1 @@
-{
-  "name": "rlk-bot",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "puppeteer": "^21.0.0",
-    "express": "^4.18.2"
-  }
-}
+"start": "xvfb-run -a node index.js"
