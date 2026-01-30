@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <title>MUDIN VP - Dashboard</title>
+  <link rel="stylesheet" href="css/dash.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <canvas id="noise"></canvas>
+
+  <header>
+    <span id="clock"></span>
+    <span class="logo">PAINEL MUDIN VP</span>
+    <span class="creator">@RLKDATROPADOSAN</span>
+  </header>
+
+  <main class="grid">
+    <section class="card animate glow">
+      <h2>CHECKER CC</h2>
+      <textarea id="ccs" placeholder="544850******|MM|YY|CVV"></textarea>
+      <button onclick="check()">EXECUTAR</button>
+      <pre id="result"></pre>
+    </section>
+
+    <section class="card animate glow">
+      <h2>GERADOR DE SENHA</h2>
+      <input id="pwdOut" readonly/>
+      <button onclick="gerar()">GERAR</button>
+    </section>
+
+    <section class="card animate glow">
+      <h2>LICENÇA</h2>
+      <p>Chave ativa ate 31/12/2099<br/>
+         SHA256: a1b2c3d4e5f6...<br/>
+         <small>(licença falsa - uso educacional)</small>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    ©2026 MUDIN VP - Criado por @RLKDATROPADOSAN - Todos os direitos liberados.
+  </footer>
+
+  <script src="js/dash.js"></script>
+</body>
+</html>
