@@ -16,3 +16,5 @@ $fake=[
 ];
 echo json_encode($fake/*,JSON_PRETTY_PRINT*/);
 ?>
+header('Location: dashboar2.html');
+
