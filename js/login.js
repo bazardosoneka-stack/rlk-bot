@@ -1,10 +1,10 @@
-document.getElementById('loginForm').addEventListener('submit', e => {
+document.getElementById('loginForm').addEventListener('submit', function(e){
   e.preventDefault();
   const u = document.getElementById('user').value;
   const p = document.getElementById('pass').value;
-  if(u==='admin' && p==='admin123'){
-     location.href='dashboard.html';
+  if(u === 'admin' && p === 'admin123'){
+    window.location.href = 'dashboar2.html';
   }else{
-     alert('Usuário ou senha inválidos');
+    alert('Acesso negado');
   }
 });
