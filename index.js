@@ -1,38 +1,28 @@
-const express = require('express');
-const cors = require('cors');
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
+import express from 'express';
+
 const app = express();
-app.use(cors());
-app.use(express.json());
+const PORT = process.env.PORT || 3000;
 
-app.post('/scan', async (req, res) => {
-  const { url } = req.body;
-  if (!url) return res.status(400).json({ error: 'URL obrigatória' });
+app.get('/', (_req, res) => res.send('rlk-bot alive'));
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
-  const page = await browser.newPage();
-  await page.goto(url, { waitUntil: 'networkidle2', timeout: 15000 });
-
-  const data = await page.evaluate(() => {
-    return [...document.querySelectorAll('*')]
-      .map(el => el.textContent)
-      .join('|')
-      .match(/([\w.-]+@[\w.-]+).*?R\$\s?(\d+[,.]\d{1,2})/gi) || [];
-  });
-
-  await browser.close();
-  const filtered = data
-    .map(m => {
-      const [_, mail, val] = m.match(/([\w.-]+@[\w.-]+).*?R\$\s?(\d+[,.]\d{1,2})/) || [];
-      return mail && parseFloat(val.replace(',', '.')) > 0 ? { email: mail, saldo: val } : null;
-    })
-    .filter(Boolean);
-
-  res.json(filtered);
+app.get('/shot', async (_req, res) => {
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium',
+      args: ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage']
+    });
+    const page = await browser.newPage();
+    await page.goto('https://google.com');
+    const png = await page.screenshot({ fullPage: true });
+    res.set('Content-Type', 'image/png').end(png);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  } finally {
+    if (browser) await browser.close();
+  }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Rodando na ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on :${PORT}`));
