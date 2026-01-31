@@ -1,2 +1,0 @@
-buildCommand = "npm ci --omit=dev"
-startCommand = "xvfb-run -a node index.js"
